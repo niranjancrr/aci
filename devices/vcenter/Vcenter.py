@@ -3,7 +3,7 @@ from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim,vmodl
 from Logger import Logger
 
-class Vcenter(Utilities,Datacenter):
+class Vcenter(Utilities,Datacenter,VM):
 
     def __init__(self, ip, username='root', password='vmware'):
         self.ip = ip
@@ -12,6 +12,7 @@ class Vcenter(Utilities,Datacenter):
         self.devtype = 'vcenter'
         Utilities.__init__(self)
         Datacenter.__init__(self)
+        VM.__init__(self)
 
     def __repr__(self):
         return "<Vcenter: {}>" .format(self.ip)
