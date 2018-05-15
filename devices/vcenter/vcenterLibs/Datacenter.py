@@ -51,7 +51,37 @@ class Datacenter:
                 self.datacenterHostsDict[datacenter.name] = hosts
         except:
             self.log.error('Exception encountered while trying to populate datacenter {} hosts' .format(datacenter.name))
-      
+
+    def populate_datacenter_vms(self):
+        '''
+            Populates datacenterVMsDict under vcenter object based on datacenterDict
+        '''
+        self.datacenterVMsDict = {}
+        try:
+            for datacenter in self.datacenterDict.values():
+                vms = {}
+                for vm in datacenter.vmFolder.childEntity:
+                    vms[vm.name] = vm
+                self.log.info('Datacenter {} has VMs {}' .format(datacenter.name,vms.keys()))
+                self.datacenterVMsDict[datacenter.name] = vms
+        except:
+            self.log.error('Exception encountered while trying to populate datacenter {} VMs' .format(datacenter.name))
+     
+    def populate_datacenter_datastores(self):
+        '''
+            Populates datacenterDatastoresDict under vcenter object based on datacenterDict
+        '''
+        self.datacenterDatastoresDict = {}
+        try:
+            for datacenter in self.datacenterDict.values():
+                datastores = {}
+                for datastore in datacenter.datastoreFolder.childEntity:
+                    datastores[datastore.name] = datastore
+                self.log.info('Datacenter {} has Datastores {}' .format(datacenter.name,datastores.keys()))
+                self.datacenterDatastoresDict[datacenter.name] = datastores
+        except:
+            self.log.error('Exception encountered while trying to populate datacenter {} Datastores' .format(datacenter.name))
+ 
     #def populate_datacenter_vms_per_host(self):
 
     #def get_host_mo(self):
